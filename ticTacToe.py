@@ -3,19 +3,10 @@
 #         https://www.amazon.in/Automate-Boring-Stuff-Python-Programming-ebook/dp/B00WJ049VU/ref=as_li_ss_tl?crid=36GA0S183R1H9&keywords=automate+the+boring+stuff+with+python&qid=1573710172&sprefix=Automate+t,aps,372&sr=8-1&linkCode=sl1&tag=bytetales-21&linkId=365febe171431796e07d4419d0a621ca&language=en_IN
 import random
 
-<<<<<<< HEAD
-''' We will make the board using dictionary 
-=======
-#PROBLEM: PROGRAM DOESN'T TERMINATE
-
-def repo2():
-  return max(3,2)
-
-''' We will make the board using dictionary
->>>>>>> 0774073ec51407040fe2a4a90bfec81b287fe1d1
+'''We will make the board using dictionary
     in which keys will be the location(i.e : top-left,mid-right,etc.)
     and initialliy it's values will be empty space and then after every move
-    we will change the value according to player's choice of move. '''
+    we will change the value according to player's choice of move.'''
 
 theBoard = {'7': ' ' , '8': ' ' , '9': ' ' ,
             '4': ' ' , '5': ' ' , '6': ' ' ,
@@ -26,9 +17,9 @@ board_keys = []
 for key in theBoard:
     board_keys.append(key) #generates this list: ['7', '8', '9', '4', '5', '6', '1', '2', '3'] BUT WHY?
 
-''' We will have to print the updated board after every move in the game and
+'''We will have to print the updated board after every move in the game and
     thus we will make a function in which we'll define the printBoard function
-    so that we can easily print the board everytime by calling this function. '''
+    so that we can easily print the board everytime by calling this function.'''
 
 def printBoard(board):
     print(board['7'] + '|' + board['8'] + '|' + board['9'])
