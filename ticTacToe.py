@@ -32,70 +32,69 @@ def printBoard(board):
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
 
 def winLogic(copyBoard, turn):
-            if copyBoard['7'] == copyBoard['8'] == copyBoard['9'] != ' ': # across the top # TURN WINNING LOGIC INTO A SEPARATE FUNCTION
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['4'] == copyBoard['5'] == copyBoard['6'] != ' ': # across the middle
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['1'] == copyBoard['2'] == copyBoard['3'] != ' ': # across the bottom
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['1'] == copyBoard['4'] == copyBoard['7'] != ' ': # down the left side
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['2'] == copyBoard['5'] == copyBoard['8'] != ' ': # down the middle
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['3'] == copyBoard['6'] == copyBoard['9'] != ' ': # down the right side
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['7'] == copyBoard['5'] == copyBoard['3'] != ' ': # diagonal
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
-            elif copyBoard['1'] == copyBoard['5'] == copyBoard['9'] != ' ': # diagonal
-                printBoard(copyBoard)
-                print("\nGame Over.\n")
-                print(" **** " + turn + " won. ****")
-                value = True
+    value = False
+    if copyBoard['7'] == copyBoard['8'] == copyBoard['9'] != ' ': # across the top # TURN WINNING LOGIC INTO A SEPARATE FUNCTION
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    elif copyBoard['4'] == copyBoard['5'] == copyBoard['6'] != ' ': # across the middle
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    elif copyBoard['1'] == copyBoard['2'] == copyBoard['3'] != ' ': # across the bottom
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    elif copyBoard['1'] == copyBoard['4'] == copyBoard['7'] != ' ': # down the left side
+        printBoard(copyBoard)
+        print(" **** " + turn + " won. ****")
+        print("\nGame Over.\n")
+        value = True
+    elif copyBoard['2'] == copyBoard['5'] == copyBoard['8'] != ' ': # down the middle
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    elif copyBoard['3'] == copyBoard['6'] == copyBoard['9'] != ' ': # down the right side
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    elif copyBoard['7'] == copyBoard['5'] == copyBoard['3'] != ' ': # diagonal
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    elif copyBoard['1'] == copyBoard['5'] == copyBoard['9'] != ' ': # diagonal
+        printBoard(copyBoard)
+        print("\nGame Over.\n")
+        print(" **** " + turn + " won. ****")
+        value = True
+    return value
 
 def rank(boardState, currentTurn):
     # Create a copy of the current board.
-    value = False
-    theBoardCopyOriginal = dict(boardState) #to use in the recursive part
     theBoardCopy = dict(boardState) #create a copy of theBoard dictionary
     for key in theBoardCopy:  #RECURSION DEPTH ERROR: NEED A BASE CASE
         if key != ' ':
             theBoardCopy[key] = currentTurn #assign random value, then check winLogic
-            print(winLogic(theBoardCopy, currentTurn))
-            if value == True: #why doesn't this work as a base case?
+            value2 = winLogic(theBoardCopy, currentTurn)
+            print(value2)
+            if value2 == True: #why doesn't this work as a base case?
                 print('WIN')
                 return key
             else:
                 if currentTurn == 'O':
-                    return rank(theBoardCopyOriginal, 'X')
+                    return rank(theBoardCopy, 'X')
                 else:
-                    return rank(theBoardCopyOriginal, 'O')
+                    return rank(theBoardCopy, 'O')
                 #EDITS TO MAKE TOMORROW: Instead of printing lose, recurse.
                 #this is where we call rank again, but we switch the turn. currentTurn = 'X' if 'O' and vice versa
-        theBoardCopy = dict(theBoard)
-     #returns the winning spot for 'O' (winLogic: value == True)
-    #this is where it would return the highest ranked value. if all values = highest, randomly choose one.
-
+        theBoardCopy = dict(boardState)
+ 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
     turn = 'X'
