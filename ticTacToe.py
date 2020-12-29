@@ -76,30 +76,30 @@ def winLogic(copyBoard, turn):
 def rank(boardState, currentTurn):
     # Create a copy of the current board.
     value = False
-    accum = '7'
-    theBoardCopy = dict(theBoard)
-    for key in theBoardCopy:
+    theBoardCopyOriginal = dict(boardState) #to use in the recursive part
+    theBoardCopy = dict(boardState) #create a copy of theBoard dictionary
+    for key in theBoardCopy:  #RECURSION DEPTH ERROR: NEED A BASE CASE
         if key != ' ':
             theBoardCopy[key] = currentTurn #assign random value, then check winLogic
             print(winLogic(theBoardCopy, currentTurn))
-            if value == True:
+            if value == True: #why doesn't this work as a base case?
                 print('WIN')
-                accum = key
-                #accum = 1
-                #print(accum)
+                return key
             else:
-                print('LOSE')
-                #accum = 0
+                if currentTurn == 'O':
+                    return rank(theBoardCopyOriginal, 'X')
+                else:
+                    return rank(theBoardCopyOriginal, 'O')
+                #EDITS TO MAKE TOMORROW: Instead of printing lose, recurse.
+                #this is where we call rank again, but we switch the turn. currentTurn = 'X' if 'O' and vice versa
         theBoardCopy = dict(theBoard)
-    return accum #returns the winning spot for 'O' (winLogic: value == True)
+     #returns the winning spot for 'O' (winLogic: value == True)
     #this is where it would return the highest ranked value. if all values = highest, randomly choose one.
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
-
     turn = 'X'
     count = 0
-
     for i in range(10): #iterate 9 times
         printBoard(theBoard)
 
