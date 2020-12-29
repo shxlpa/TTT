@@ -79,11 +79,18 @@ def rank(boardState, currentTurn):
     # Create a copy of the current board.
     theBoardCopy = dict(boardState) #create a copy of theBoard dictionary
     for key in theBoardCopy:  #RECURSION DEPTH ERROR: NEED A BASE CASE
-        if key != ' ':
+        if key == ' ':
             theBoardCopy[key] = currentTurn #assign random value, then check winLogic
             value2 = winLogic(theBoardCopy, currentTurn)
+            # winLogic needs to return one of 3 values:
+            # X wins
+            # O wins
+            # No one wins
+            # In rank, check to see if there is a win, then check if the
+            # winning party is the same as "currentTurn".  If so, this is the winning simulation
             print(value2)
             if value2 == True: #why doesn't this work as a base case?
+                # Pick this spot IFF currentTurn
                 print('WIN')
                 return key
             else:
