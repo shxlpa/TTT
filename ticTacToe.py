@@ -3,11 +3,6 @@
 #         https://www.amazon.in/Automate-Boring-Stuff-Python-Programming-ebook/dp/B00WJ049VU/ref=as_li_ss_tl?crid=36GA0S183R1H9&keywords=automate+the+boring+stuff+with+python&qid=1573710172&sprefix=Automate+t,aps,372&sr=8-1&linkCode=sl1&tag=bytetales-21&linkId=365febe171431796e07d4419d0a621ca&language=en_IN
 import random
 
-#PROBLEM: PROGRAM DOESN'T TERMINATE
-
-def repo2():
-  return max(3,2)
-  
 ''' We will make the board using dictionary 
     in which keys will be the location(i.e : top-left,mid-right,etc.)
     and initialliy it's values will be empty space and then after every move 

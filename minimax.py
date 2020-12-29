@@ -3,9 +3,6 @@
 # maximizing player can get 
 import math 
 
-def repoChangeName():
-  return max(3,2)
-
 def minimax (curDepth, nodeIndex, 
              maxTurn, scores,  
              targetDepth): 
