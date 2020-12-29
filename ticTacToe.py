@@ -36,43 +36,63 @@ def winLogic(copyBoard, turn):
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['4'] == copyBoard['5'] == copyBoard['6'] != ' ': # across the middle
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['1'] == copyBoard['2'] == copyBoard['3'] != ' ': # across the bottom
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['1'] == copyBoard['4'] == copyBoard['7'] != ' ': # down the left side
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['2'] == copyBoard['5'] == copyBoard['8'] != ' ': # down the middle
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['3'] == copyBoard['6'] == copyBoard['9'] != ' ': # down the right side
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['7'] == copyBoard['5'] == copyBoard['3'] != ' ': # diagonal
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
             elif copyBoard['1'] == copyBoard['5'] == copyBoard['9'] != ' ': # diagonal
                 printBoard(copyBoard)
                 print("\nGame Over.\n")
                 print(" **** " + turn + " won. ****")
+                value = True
 
 def rank(boardState, currentTurn):
     # Create a copy of the current board.
+    value = False
+    accum = '7'
     theBoardCopy = dict(theBoard)
     for key in theBoardCopy:
-        if key != '':
+        if key != ' ':
             theBoardCopy[key] = currentTurn #assign random value, then check winLogic
             print(winLogic(theBoardCopy, currentTurn))
-    return '3' #this is where it would return the highest ranked value. if all values = highest, randomly choose one.
+            if value == True:
+                print('WIN')
+                accum = key
+                #accum = 1
+                #print(accum)
+            else:
+                print('LOSE')
+                #accum = 0
+        theBoardCopy = dict(theBoard)
+    return accum #returns the winning spot for 'O' (winLogic: value == True)
+    #this is where it would return the highest ranked value. if all values = highest, randomly choose one.
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
