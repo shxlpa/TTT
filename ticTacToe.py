@@ -76,36 +76,25 @@ def winLogic(copyBoard, turn):
         value = True
     return value
 
-#why isn't rank returning anything?
 def rank(boardState, currentTurn):
-    theBoardCopy = dict(boardState) #create a copy of theBoard dictionary
+    theBoardCopy = dict(boardState)
+    ans = '1'
     for key in theBoardCopy:
-        i = 1
         if theBoardCopy[key] == ' ':
-            theBoardCopy[key] = currentTurn #assign random value, then check winLogic
-            value2 = winLogic(theBoardCopy, currentTurn)
-            # winLogic needs to return one of 3 values:
-            # X wins
-            # O wins
-            # No one wins
-            # In rank, check to see if there is a win, then check if the
-            # winning party is the same as "currentTurn".  If so, this is the winning simulation
-            print(value2)
-            #print(i) #INDEX: EXACTLY WHICH SPOT IN THE DICTIONARY TO PLACE 'O'
-            if value2 == True: #why doesn't this work as a base case?
-                # Pick this spot IFF currentTurn
-                print('WIN')
-                return key #board_keys[i] would be ordered wrong 
+            theBoardCopy[key] = currentTurn
+            win = winLogic(theBoardCopy, currentTurn)
+            print(win)
+            if win == True:
+                print('THIS IS A WIN')
+                ans = key
             else:
                 if currentTurn == 'O':
                     return rank(theBoardCopy, 'X')
                 else:
                     return rank(theBoardCopy, 'O')
-                #EDITS TO MAKE TOMORROW: Instead of printing lose, recurse.
-                #this is where we call rank again, but we switch the turn. currentTurn = 'X' if 'O' and vice versa
-        i += 1
         theBoardCopy = dict(boardState)
- 
+    return ans
+
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
     turn = 'X'
