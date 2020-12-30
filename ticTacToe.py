@@ -70,6 +70,7 @@ def winLogic(board, turn):
         value = True
     return value
 
+
 # Returns winner and position that will cause the win
 def simulate(board, currentTurn):
     boardCopy = dict(board) #create a copy of masterBoard dictionary
