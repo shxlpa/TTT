@@ -81,8 +81,15 @@ def simulate(board, currentTurn):
     boardCopy = dict(board) #create a copy of masterBoard dictionary
     print("Running simulation on ")
     printBoard(boardCopy)
+
+    openSpot = ''
     for key in boardCopy:
         if boardCopy[key]  == ' ':
+
+            if openSpot == '':
+                openSpot = key
+                print("openspot ", openSpot)
+
             boardCopy[key] = currentTurn
 
             win = winLogic(boardCopy, currentTurn)
@@ -92,10 +99,19 @@ def simulate(board, currentTurn):
                 return key
             else:
                 if currentTurn == 'O':
-                    return simulate(boardCopy, 'X')
+                    res = simulate(boardCopy, 'X')
                 else:
-                    return simulate(boardCopy, 'O')
-        boardCopy = dict(board)
+                    res = simulate(boardCopy, 'O')
+                if res == '':
+                    print("No win")
+                    print("Resetting Board")
+                    boardCopy[key] = ' '
+                else:
+                    return res
+
+    # Base case, no one wins, find first foud open spot
+    print("Returning ", openSpot, " for ", currentTurn)
+    return openSpot
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
