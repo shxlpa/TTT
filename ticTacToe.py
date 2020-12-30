@@ -103,14 +103,13 @@ def simulate(board, currentTurn):
                 else:
                     res = simulate(boardCopy, 'O')
                 if res == '':
-                    print("No win")
                     print("Resetting Board")
                     boardCopy[key] = ' '
                 else:
                     return res
 
     # Base case, no one wins, find first foud open spot
-    print("Returning ", openSpot, " for ", currentTurn)
+    print("No win for ", currentTurn)
     return openSpot
 
 # Now we'll write the main function which has all the gameplay functionality.
