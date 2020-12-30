@@ -79,27 +79,22 @@ def winLogic(board, turn):
 #why isn't simulate returning anything?
 def simulate(board, currentTurn):
     boardCopy = dict(board) #create a copy of masterBoard dictionary
+    print("Running simulation on ")
+    printBoard(boardCopy)
     for key in boardCopy:
-        i = 1
-        value = boardCopy[key]
-
-        if value == ' ':
+        if boardCopy[key]  == ' ':
             boardCopy[key] = currentTurn
 
             win = winLogic(boardCopy, currentTurn)
 
             if win == True:
-                print('WIN by ' currentTurn)
-                return list(dict)[i] #boardKeys[i] would be ordered wrong
+                print('WIN by ', currentTurn, " at ", key)
+                return key
             else:
                 if currentTurn == 'O':
                     return simulate(boardCopy, 'X')
                 else:
                     return simulate(boardCopy, 'O')
-                #EDITS TO MAKE TOMORROW: Instead of printing lose, recurse.
-                #this is where we call simulate again, but we switch the turn.
-                currentTurn = 'X' if 'O' and vice versa
-        i += 1
         boardCopy = dict(board)
 
 # Now we'll write the main function which has all the gameplay functionality.
@@ -112,11 +107,10 @@ def game():
         if turn == 'O': #if O's turn
             print("It's " + turn + "'s turn!")
             move = simulate(masterBoard, turn)
-            #str(random.randint(1, 9))
 
         else:
-            print("It's your turn," + turn + ".Move to which place?")
-            move = input() #asks for numerical input from turn, so the random must be before this
+            print("It's your turn, " + turn + ". Move to which place?")
+            move = input()
 
         if masterBoard[move] == ' ': #if dict[key] = empty, put x in place
             masterBoard[move] = turn
