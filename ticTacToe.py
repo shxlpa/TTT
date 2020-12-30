@@ -70,7 +70,6 @@ def winLogic(board, turn):
         value = True
     return value
 
-
 # Returns winner and position that will cause the win
 def simulate(board, currentTurn):
     boardCopy = dict(board) #create a copy of masterBoard dictionary
@@ -90,6 +89,7 @@ def simulate(board, currentTurn):
                 # Base case, win found
                 print('WIN by ', currentTurn, " at ", key)
                 return currentTurn, key
+
             else:
                 # Recursive case
                 if currentTurn == 'O':
@@ -114,6 +114,7 @@ def simulate(board, currentTurn):
     else:
         print("No win for ", currentTurn, "... Returning ", openSpot)
     return '', openSpot
+
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
