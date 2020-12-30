@@ -81,7 +81,7 @@ def rank(boardState, currentTurn):
     theBoardCopy = dict(boardState) #create a copy of theBoard dictionary
     for key in theBoardCopy:
         i = 1
-        if key == ' ':
+        if theBoardCopy[key] == ' ':
             theBoardCopy[key] = currentTurn #assign random value, then check winLogic
             value2 = winLogic(theBoardCopy, currentTurn)
             # winLogic needs to return one of 3 values:
@@ -95,7 +95,7 @@ def rank(boardState, currentTurn):
             if value2 == True: #why doesn't this work as a base case?
                 # Pick this spot IFF currentTurn
                 print('WIN')
-                return list(dict)[i] #board_keys[i] would be ordered wrong 
+                return key #board_keys[i] would be ordered wrong 
             else:
                 if currentTurn == 'O':
                     return rank(theBoardCopy, 'X')
