@@ -20,6 +20,7 @@ board_keys = []
 for key in theBoard:
     board_keys.append(key) #generates this list: ['7', '8', '9', '4', '5', '6', '1', '2', '3'] BUT WHY?
 
+print(board_keys)
 '''We will have to print the updated board after every move in the game and
     thus we will make a function in which we'll define the printBoard function
     so that we can easily print the board everytime by calling this function.'''
@@ -75,10 +76,11 @@ def winLogic(copyBoard, turn):
         value = True
     return value
 
+#why isn't rank returning anything?
 def rank(boardState, currentTurn):
-    # Create a copy of the current board.
     theBoardCopy = dict(boardState) #create a copy of theBoard dictionary
-    for key in theBoardCopy:  #RECURSION DEPTH ERROR: NEED A BASE CASE
+    for key in theBoardCopy:
+        i = 1
         if key == ' ':
             theBoardCopy[key] = currentTurn #assign random value, then check winLogic
             value2 = winLogic(theBoardCopy, currentTurn)
@@ -89,10 +91,11 @@ def rank(boardState, currentTurn):
             # In rank, check to see if there is a win, then check if the
             # winning party is the same as "currentTurn".  If so, this is the winning simulation
             print(value2)
+            #print(i) #INDEX: EXACTLY WHICH SPOT IN THE DICTIONARY TO PLACE 'O'
             if value2 == True: #why doesn't this work as a base case?
                 # Pick this spot IFF currentTurn
                 print('WIN')
-                return key
+                return list(dict)[i] #board_keys[i] would be ordered wrong 
             else:
                 if currentTurn == 'O':
                     return rank(theBoardCopy, 'X')
@@ -100,6 +103,7 @@ def rank(boardState, currentTurn):
                     return rank(theBoardCopy, 'O')
                 #EDITS TO MAKE TOMORROW: Instead of printing lose, recurse.
                 #this is where we call rank again, but we switch the turn. currentTurn = 'X' if 'O' and vice versa
+        i += 1
         theBoardCopy = dict(boardState)
  
 # Now we'll write the main function which has all the gameplay functionality.
