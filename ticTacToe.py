@@ -1,7 +1,7 @@
-#Implementation of Two Player Tic-Tac-Toe game in Python.
-#Sources: https://dev.to/jamesshah/the-classic-tictactoe-game-in-python-cpi
-#         https://www.amazon.in/Automate-Boring-Stuff-Python-Programming-ebook/dp/B00WJ049VU/ref=as_li_ss_tl?crid=36GA0S183R1H9&keywords=automate+the+boring+stuff+with+python&qid=1573710172&sprefix=Automate+t,aps,372&sr=8-1&linkCode=sl1&tag=bytetales-21&linkId=365febe171431796e07d4419d0a621ca&language=en_IN
+# Implementation of Two Player Tic-Tac-Toe game in Python.
+# Sources: https://dev.to/jamesshah/the-classic-tictactoe-game-in-python-cpi
 import random
+import sys
 
 # KEY:
 # variable 'turn' holds string value X or O
@@ -11,16 +11,18 @@ import random
     and initialliy it's values will be empty space and then after every move
     we will change the value according to player's choice of move.'''
 
-theBoard = {'7': ' ' , '8': ' ' , '9': ' ' ,
+# board is a dictionary. the initial keys to the dictionary are empty strings
+masterBoard = {'7': ' ' , '8': ' ' , '9': ' ' ,
             '4': ' ' , '5': ' ' , '6': ' ' ,
-            '1': ' ' , '2': ' ' , '3': ' ' } #board is a dictionary. the initial keys to the dictionary are empty strings
+            '1': ' ' , '2': ' ' , '3': ' ' }
 
-board_keys = []
+boardKeys = []
 
-for key in theBoard:
-    board_keys.append(key) #generates this list: ['7', '8', '9', '4', '5', '6', '1', '2', '3'] BUT WHY?
+for key in masterBoard:
+    # generates this list: ['7', '8', '9', '4', '5', '6', '1', '2', '3'] BUT WHY?
+    boardKeys.append(key)
 
-print(board_keys)
+print(boardKeys)
 '''We will have to print the updated board after every move in the game and
     thus we will make a function in which we'll define the printBoard function
     so that we can easily print the board everytime by calling this function.'''
@@ -32,87 +34,106 @@ def printBoard(board):
     print('-+-+-')
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
 
-def winLogic(copyBoard, turn):
+def winLogic(board, turn):
     value = False
-    if copyBoard['7'] == copyBoard['8'] == copyBoard['9'] != ' ': # across the top # TURN WINNING LOGIC INTO A SEPARATE FUNCTION
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    if board['7'] == board['8'] == board['9'] != ' ': # across the top # TURN WINNING LOGIC INTO A SEPARATE FUNCTION
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['4'] == copyBoard['5'] == copyBoard['6'] != ' ': # across the middle
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    elif board['4'] == board['5'] == board['6'] != ' ': # across the middle
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['1'] == copyBoard['2'] == copyBoard['3'] != ' ': # across the bottom
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    elif board['1'] == board['2'] == board['3'] != ' ': # across the bottom
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['1'] == copyBoard['4'] == copyBoard['7'] != ' ': # down the left side
-        printBoard(copyBoard)
-        print(" **** " + turn + " won. ****")
-        print("\nGame Over.\n")
+    elif board['1'] == board['4'] == board['7'] != ' ': # down the left side
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['2'] == copyBoard['5'] == copyBoard['8'] != ' ': # down the middle
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    elif board['2'] == board['5'] == board['8'] != ' ': # down the middle
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['3'] == copyBoard['6'] == copyBoard['9'] != ' ': # down the right side
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    elif board['3'] == board['6'] == board['9'] != ' ': # down the right side
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['7'] == copyBoard['5'] == copyBoard['3'] != ' ': # diagonal
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    elif board['7'] == board['5'] == board['3'] != ' ': # diagonal
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
-    elif copyBoard['1'] == copyBoard['5'] == copyBoard['9'] != ' ': # diagonal
-        printBoard(copyBoard)
-        print("\nGame Over.\n")
-        print(" **** " + turn + " won. ****")
+    elif board['1'] == board['5'] == board['9'] != ' ': # diagonal
+        printBoard(board)
+        print("**** " + turn + " will win. ****")
         value = True
     return value
 
-def rank(boardState, currentTurn):
-    theBoardCopy = dict(boardState)
-    ans = '1'
-    for key in theBoardCopy:
-        if theBoardCopy[key] == ' ':
-            theBoardCopy[key] = currentTurn
-            win = winLogic(theBoardCopy, currentTurn)
-            print(win)
-            if win == True:
-                print('THIS IS A WIN')
-                ans = key
+# Returns winner and position that will cause the win
+def simulate(board, currentTurn):
+    boardCopy = dict(board) #create a copy of masterBoard dictionary
+    print("Running simulation on ")
+    printBoard(boardCopy)
+
+    openSpot = ''
+    for key in boardCopy:
+        if boardCopy[key]  == ' ':
+            if openSpot == '':
+                openSpot = key
+                print("Trying openspot ", openSpot)
+
+            boardCopy[key] = currentTurn
+
+            if winLogic(boardCopy, currentTurn):
+                # Base case, win found
+                print('WIN by ', currentTurn, " at ", key)
+                return currentTurn, key
+
             else:
+                # Recursive case
                 if currentTurn == 'O':
-                    return rank(theBoardCopy, 'X')
+                    winner, pos  = simulate(boardCopy, 'X')
                 else:
-                    return rank(theBoardCopy, 'O')
-        theBoardCopy = dict(boardState)
-    return ans
+                    winner, pos = simulate(boardCopy, 'O')
+
+                if winner != '':
+                    # There is a winner... we need to take that spot.  If it
+                    # is currentTurn, we will win.  Else we will block the
+                    # opponent.
+                    return winner, pos
+
+            # Iterative case... Try the next position in the board.
+            print("Resetting Board")
+            boardCopy[key] = ' '
+
+    # If we get here, there was no winner
+    # if openSpot == '', then the board was full
+    if openSpot == '':
+        print("Board full")
+    else:
+        print("No win for ", currentTurn, "... Returning ", openSpot)
+    return '', openSpot
+
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
     turn = 'X'
     count = 0
     for i in range(10): #iterate 9 times
-        printBoard(theBoard)
+        printBoard(masterBoard)
 
         if turn == 'O': #if O's turn
             print("It's " + turn + "'s turn!")
-            move = rank(theBoard, turn)
-            #str(random.randint(1, 9))
-
+            winner, move = simulate(masterBoard, turn)
+            if winner != '':
+                print("Simulate detected that ", winner, " will win at ", move)
         else:
-            print("It's your turn," + turn + ".Move to which place?")
-            move = input() #asks for numerical input from turn, so the random must be before this
+            print("It's your turn, " + turn + ". Move to which place?")
+            move = input()
 
-        if theBoard[move] == ' ': #if dict[key] = empty, put x in place
-            theBoard[move] = turn
+        if masterBoard[move] == ' ': #if dict[key] = empty, put x in place
+            masterBoard[move] = turn
             count += 1
         else:
             print("That place is already filled. Move to which place?")
@@ -121,7 +142,10 @@ def game():
         # Now we will check if player X or O has won,for every move after 5 moves.
         # Because the min # after which someone can win is in 5 counted moves from both.
         if count >= 5:
-            winLogic(theBoard, turn)
+            if winLogic(masterBoard, turn):
+                print("Gane Over.  ", turn, " Won!")
+                sys.exit()
+
 
         # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
         if count == 9:
@@ -136,8 +160,8 @@ def game():
     # Now we will ask if player wants to restart the game or not.
     restart = input("Do want to play Again?(y/n)")
     if restart == "y" or restart == "Y":
-        for key in board_keys:
-            theBoard[key] = " " #erases everything
+        for key in boardKeys:
+            masterBoard[key] = " " #erases everything
 
         game()
 
