@@ -115,6 +115,26 @@ def simulate(board, currentTurn):
         print("No win for ", currentTurn, "... Returning ", openSpot)
     return '', openSpot #you only ever get here if the board is full and there is no winner
 
+#WRITING THE BREADTH SEARCH VERSION
+#trying out a list of dictionaries
+#returns all possible winning boards
+def simulate2(board, currentTurn):
+    boardCopy = dict(board)
+    allBoards = []
+    winningBoards = []
+    i = 0
+    for i in range(1,10): #some range??
+        for key in boardCopy:
+            currentTurn
+            #check winLogic
+            if winLogic(boardCopy, currentTurn):
+                winningBoards += boardCopy
+                allboards += boardCopy
+            else:
+                allBoards += boardCopy
+        simulate(allBoards[i += 1], 'X') # still have to write the switch turn logic, X or O
+    return winningBoards 
+
 #problems with simulate:
 # winner = '' is when there's a tie - that might be a bad way to put it?
 # function simulate finds win for X or O, while we only want the wins where O wins. 
