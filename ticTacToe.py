@@ -97,7 +97,7 @@ def simulate(board, currentTurn):
                 else:
                     winner, pos = simulate(boardCopy, 'O')
 
-                if winner != '':
+                if winner != '': #I think the problem is here
                     # There is a winner... we need to take that spot.  If it
                     # is currentTurn, we will win.  Else we will block the
                     # opponent.
@@ -113,11 +113,17 @@ def simulate(board, currentTurn):
         print("Board full")
     else:
         print("No win for ", currentTurn, "... Returning ", openSpot)
-    return '', openSpot
+    return '', openSpot #you only ever get here if the board is full and there is no winner
+
 #problems with simulate:
-# winner = '' could never happen, currentTurn is always the winner, so that's a bad/faulty if else statement.
-# function simulate finds win for X or O, while we only want the wins where O wins.
+# winner = '' is when there's a tie - that might be a bad way to put it?
+# function simulate finds win for X or O, while we only want the wins where O wins. 
+        # note, we still want to account for when X wins, but we want to minimize those losses.
 # only goes down one branch; as soon as it finds a win, it returns it. Instead, we want to search BREADTH instead of DEPTH.
+
+#What we wanna do:
+# edit simulate to search breadth-wise. ## MAYBE: put the for loop inside the if?
+# extra thinking: how could I edit this program to search fully depth wise?
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
