@@ -71,7 +71,7 @@ def winLogic(board, turn):
     return value
 
 # Returns winner and position that will cause the win
-def simulate(board, currentTurn):
+def oldSimulate(board, currentTurn):
     boardCopy = dict(board) #create a copy of masterBoard dictionary
     print("Running simulation on ")
     printBoard(boardCopy)
@@ -122,18 +122,28 @@ def simulate2(board, currentTurn):
     boardCopy = dict(board)
     allBoards = []
     winningBoards = []
-    i = 0
-    for i in range(1,10): #some range??
-        for key in boardCopy:
-            currentTurn
-            #check winLogic
+    i = -1
+    while i < len(allBoards): #some range??
+        openSpot = ''
+
+        for key in boardCopy: 
+            '''this for loop generates two lists. one of them is a list of all possible boards; the other is a list of all winning boards.'''
+            #still have to write code to update boardCopy
+            if boardCopy[key]  == ' ':
+                if openSpot == '':
+                    openSpot = key
+                    print("Trying openspot ", openSpot)
+                boardCopy[key] = currentTurn
+            #add new board to list
+            allBoards += boardCopy
             if winLogic(boardCopy, currentTurn):
                 winningBoards += boardCopy
-                allboards += boardCopy
-            else:
-                allBoards += boardCopy
+
+        #recurse
         simulate(allBoards[i += 1], 'X') # still have to write the switch turn logic, X or O
-    return winningBoards 
+    
+    return winningBoards #simulate really should return the winning key, but if it returns all winning boards that's fine for now
+
 
 #problems with simulate:
 # winner = '' is when there's a tie - that might be a bad way to put it?
