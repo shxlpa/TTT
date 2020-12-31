@@ -106,7 +106,7 @@ def simulate(board, currentTurn):
             # Iterative case... Try the next position in the board.
             print("Resetting Board")
             boardCopy[key] = ' '
-
+    
     # If we get here, there was no winner
     # if openSpot == '', then the board was full
     if openSpot == '':
@@ -114,7 +114,10 @@ def simulate(board, currentTurn):
     else:
         print("No win for ", currentTurn, "... Returning ", openSpot)
     return '', openSpot
-
+#problems with simulate:
+# winner = '' could never happen, currentTurn is always the winner, so that's a bad/faulty if else statement.
+# function simulate finds win for X or O, while we only want the wins where O wins.
+# only goes down one branch; as soon as it finds a win, it returns it. Instead, we want to search BREADTH instead of DEPTH.
 
 # Now we'll write the main function which has all the gameplay functionality.
 def game():
