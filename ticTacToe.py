@@ -118,7 +118,7 @@ def oldSimulate(board, currentTurn):
 #WRITING THE BREADTH SEARCH VERSION
 #trying out a list of dictionaries
 #returns all possible winning boards
-def simulate2(board, currentTurn):
+def simulate(board, currentTurn):
     boardCopy = dict(board)
     allBoards = []
     winningBoards = []
