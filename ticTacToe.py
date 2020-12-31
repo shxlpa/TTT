@@ -140,7 +140,10 @@ def simulate(board, currentTurn):
                 winningBoards += boardCopy
 
         #recurse
-        simulate(allBoards[i += 1], 'X') # still have to write the switch turn logic, X or O
+        if currentTurn == 'O': #logic to switch turns
+            simulate(allBoards[i += 1], 'X') 
+        else:
+            simulate(allBoards[i += 1], 'O') 
     
     return winningBoards #simulate really should return the winning key, but if it returns all winning boards that's fine for now
 
