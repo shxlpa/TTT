@@ -118,11 +118,15 @@ def oldSimulate(board, currentTurn):
 #WRITING THE BREADTH SEARCH VERSION
 #trying out a list of dictionaries
 #returns all possible winning boards
+
+globalVar = 0
+
 def simulate(board, currentTurn):
     boardCopy = dict(board)
     allBoards = []
     winningBoards = []
     i = -1
+    globalVar += 1
     while i < len(allBoards): #some range??
         openSpot = ''
 
@@ -135,15 +139,17 @@ def simulate(board, currentTurn):
                     print("Trying openspot ", openSpot)
                 boardCopy[key] = currentTurn
             #add new board to list
-            allBoards += boardCopy
+            allBoards += [boardCopy]
             if winLogic(boardCopy, currentTurn):
                 winningBoards += boardCopy
+            
+            boardCopy[key] = ' ' #resets board
 
         #recurse
         if currentTurn == 'O': #logic to switch turns
-            simulate(allBoards[i += 1], 'X') 
+            simulate(allBoards[i += 1], 'X')
         else:
-            simulate(allBoards[i += 1], 'O') 
+            simulate(allBoards[i += 1], 'O')
     
     return winningBoards #simulate really should return the winning key, but if it returns all winning boards that's fine for now
 
