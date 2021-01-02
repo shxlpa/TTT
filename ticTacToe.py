@@ -143,13 +143,15 @@ def simulate(board, currentTurn):
             if winLogic(boardCopy, currentTurn):
                 winningBoards += boardCopy
             
-            boardCopy[key] = ' ' #resets board
+            boardCopy[key] = ' ' #resets board --> THIS MAKES IT A FOREVER LOOP. HOW ELSE DO I RESET BOARD?
 
         #recurse
         if currentTurn == 'O': #logic to switch turns
-            simulate(allBoards[i += 1], 'X')
+            i += 1
+            return simulate(allBoards[i], 'X')
         else:
-            simulate(allBoards[i += 1], 'O')
+            i += 1
+            return simulate(allBoards[i], 'O')
     
     return winningBoards #simulate really should return the winning key, but if it returns all winning boards that's fine for now
 
