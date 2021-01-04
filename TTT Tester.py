@@ -70,41 +70,57 @@ def winLogic(board, turn):
         value = True
     return value
 
-globalVar = 0
+depth = 0
 
+#the problem is with allBoards
 def simulate(board, currentTurn):
     boardCopy = dict(board)
     allBoards = []
     winningBoards = []
-    i = -1
-    globalVar += 1
-    while i < len(allBoards): #some range??
-        openSpot = ''
 
-        for key in boardCopy: 
-            '''this for loop generates two lists. one of them is a list of all possible boards; the other is a list of all winning boards.'''
-            #still have to write code to update boardCopy
-            if boardCopy[key]  == ' ':
-                if openSpot == '':
-                    openSpot = key
-                    print("Trying openspot ", openSpot)
-                boardCopy[key] = currentTurn
+    global depth
+    depth = depth + 1
+    
+    for key in boardCopy:
+        '''this for loop generates two lists. one of them is a list of all possible boards; the other is a list of all winning boards.'''
+        if boardCopy[key]  == ' ':
+                    
+            print("Trying openspot ", key, " at depth ", depth)
+            boardCopy[key] = currentTurn
             #add new board to list
             allBoards += [boardCopy]
+                
             if winLogic(boardCopy, currentTurn):
                 winningBoards += boardCopy
             
             boardCopy[key] = ' ' #resets board --> THIS MAKES IT A FOREVER LOOP. HOW ELSE DO I RESET BOARD?
 
-        #recurse
-        if currentTurn == 'O': #logic to switch turns
-            i += 1
-            return simulate(allBoards[i], 'X')
-        else:
-            i += 1
-            return simulate(allBoards[i], 'O')
+    #I THINK THERE IS A PROBLEM HERE: calling X and O 
+    for key in boardCopy:
+        if boardCopy[key] == ' ':
+
+            boardCopy[key] = currentTurn
+            if currentTurn == 'O': #logic to switch turns
+                return simulate(boardCopy, 'X')
+            else:
+                return simulate(boardCopy, 'O')
     
-    return winningBoards 
+    return allBoards 
 
 
 simulate(masterBoard, 'O')
+
+##        for key in boardCopy: 
+##            '''this for loop generates two lists. one of them is a list of all possible boards; the other is a list of all winning boards.'''
+##            #still have to write code to update boardCopy
+##            if boardCopy[key]  == ' ':
+##                if openSpot == '':
+##                    openSpot = key
+##                    print("Trying openspot ", openSpot)
+##                boardCopy[key] = currentTurn
+##            #add new board to list
+##            #allBoards += [boardCopy]
+##            if winLogic(boardCopy, currentTurn):
+##                winningBoards += boardCopy
+##            
+##            boardCopy[key] = ' ' #resets board --> THIS MAKES IT A FOREVER LOOP. HOW ELSE DO I RESET BOARD?
